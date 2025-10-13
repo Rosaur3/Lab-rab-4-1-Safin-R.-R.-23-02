@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using Lab_rab_4_1_Safin_R._R._23_02.View;
+using System.Text;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -12,13 +13,20 @@ using System.Windows.Shapes;
 namespace Lab_rab_4_1_Safin_R._R._23_02
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private void Employee_OnClick(object sender, RoutedEventArgs e)
         {
-            InitializeComponent();
+            var w = new WindowEmployee();
+            w.Show();
+        }
+
+        private void Role_OnClick(object sender, RoutedEventArgs e)
+        {
+            var w = new WindowRole();
+            w.Show();
         }
     }
 }
