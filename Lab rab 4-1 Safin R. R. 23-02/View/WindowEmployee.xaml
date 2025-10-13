@@ -6,7 +6,18 @@
         xmlns:local="clr-namespace:Lab_rab_4_1_Safin_R._R._23_02.View"
         mc:Ignorable="d"
         Title="Сотрудники" Height="450" Width="800">
-    <Grid>
+    <StackPanel>
+        <ListView x:Name="lvEmployee">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Код" Width="50" DisplayMemberBinding="{Binding Id}" />
+                    <GridViewColumn Header="Фамилия" DisplayMemberBinding="{Binding LastName}" />
+                    <GridViewColumn Header="Имя" DisplayMemberBinding="{Binding FirstName}" />
+                    <GridViewColumn Header="Должность" DisplayMemberBinding="{Binding Role}" />
+                    <GridViewColumn Header="Дата рождения" DisplayMemberBinding="{Binding Birthday, StringFormat={}{0:dd.MM.yyyy}}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </StackPanel>
 
-    </Grid>
 </Window>
