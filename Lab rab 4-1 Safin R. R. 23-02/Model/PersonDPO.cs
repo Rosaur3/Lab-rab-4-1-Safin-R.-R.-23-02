@@ -16,7 +16,7 @@ namespace Lab_rab_4_1_Safin_R._R._23_02.Model
             set
             {
                 roleName = value;
-                OnPropertyChanged("RoleName");
+                OnPropertyChanged(nameof(RoleName));
             }
         }
 
@@ -27,7 +27,7 @@ namespace Lab_rab_4_1_Safin_R._R._23_02.Model
             set
             {
                 firstName = value;
-                OnPropertyChanged("FirstName");
+                OnPropertyChanged(nameof(FirstName));
             }
         }
 
@@ -38,24 +38,24 @@ namespace Lab_rab_4_1_Safin_R._R._23_02.Model
             set
             {
                 lastName = value;
-                OnPropertyChanged("LastName");
+                OnPropertyChanged(nameof(LastName));
             }
         }
 
-        private DateTime birthday;
-        public DateTime Birthday
+        private string birthday;
+        public string Birthday
         {
             get { return birthday; }
             set
             {
                 birthday = value;
-                OnPropertyChanged("Birthday");
+                OnPropertyChanged(nameof(Birthday));
             }
         }
 
         public PersonDpo() { }
 
-        public PersonDpo(int id, string roleName, string firstName, string lastName, DateTime birthday)
+        public PersonDpo(int id, string roleName, string firstName, string lastName, string birthday)
         {
             this.Id = id;
             this.RoleName = roleName;
@@ -87,6 +87,15 @@ namespace Lab_rab_4_1_Safin_R._R._23_02.Model
             }
 
             return perDpo;
+        }
+
+        public static string GetStringBirthday(string birthday)
+        {
+            if (DateTime.TryParse(birthday, out DateTime date))
+            {
+                return date.ToString("dd.MM.yyyy");
+            }
+            return birthday;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

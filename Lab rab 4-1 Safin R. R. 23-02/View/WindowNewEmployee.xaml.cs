@@ -1,6 +1,6 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Windows;
-using System.Windows.Controls;
 using Lab_rab_4_1_Safin_R._R._23_02.Model;
 
 namespace Lab_rab_4_1_Safin_R._R._23_02.View
@@ -24,9 +24,27 @@ namespace Lab_rab_4_1_Safin_R._R._23_02.View
             }
         }
 
+        private void tbBirthday_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (tbBirthday.Visibility == Visibility.Hidden)
+            {
+                ClBirthday.Visibility = Visibility.Visible;
+
+                // Пытаемся распарсить дату из текстового поля
+                if (DateTime.TryParse(tbBirthday.Text, out DateTime date))
+                {
+                    ClBirthday.SelectedDate = date;
+                }
+            }
+            else
+            {
+                ClBirthday.Visibility = Visibility.Hidden;
+            }
+        }
+
         private void SaveButton_Click(object sender, RoutedEventArgs e)
         {
-            // Проверяем заполнение полей через прямые ссылки на элементы
+            // Проверяем заполнение полей
             if (string.IsNullOrWhiteSpace(txtLastName.Text))
             {
                 MessageBox.Show("Введите фамилию!", "Предупреждение",
@@ -51,15 +69,20 @@ namespace Lab_rab_4_1_Safin_R._R._23_02.View
                 return;
             }
 
-            if (dpBirthday.SelectedDate == null)
+            // Обновляем дату рождения из календаря, если он видим
+            if (ClBirthday.Visibility == Visibility.Visible && ClBirthday.SelectedDate.HasValue)
             {
-                MessageBox.Show("Выберите дату рождения!", "Предупреждение",
+                tbBirthday.Text = ClBirthday.SelectedDate.Value.ToString("dd.MM.yyyy");
+            }
+
+            if (string.IsNullOrWhiteSpace(tbBirthday.Text))
+            {
+                MessageBox.Show("Введите дату рождения!", "Предупреждение",
                     MessageBoxButton.OK, MessageBoxImage.Warning);
-                dpBirthday.Focus();
+                tbBirthday.Focus();
                 return;
             }
 
-            // Если все поля заполнены, сохраняем
             this.DialogResult = true;
             this.Close();
         }

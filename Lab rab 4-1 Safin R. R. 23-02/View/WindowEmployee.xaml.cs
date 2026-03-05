@@ -25,5 +25,15 @@ namespace Lab_rab_4_1_Safin_R._R._23_02.View
             InitializeComponent();
             DataContext = PersonViewModel.Instance;
         }
+
+        private void WindowEmployee_Loaded(object sender, RoutedEventArgs e)
+        {
+            var vm = DataContext as PersonViewModel;
+            if (vm != null)
+            {
+                System.Diagnostics.Debug.WriteLine($"Loaded: ListPersonDpo count = {vm.ListPersonDpo.Count}");
+                System.Diagnostics.Debug.WriteLine($"Loaded: SelectedPersonDpo = {vm.SelectedPersonDpo?.LastName ?? "null"}");
+            }
+        }
     }
 }

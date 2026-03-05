@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace Lab_rab_4_1_Safin_R._R._23_02.Helper
@@ -20,18 +16,31 @@ namespace Lab_rab_4_1_Safin_R._R._23_02.Helper
 
         public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
         {
-            this.execute = execute;
+            this.execute = execute ?? throw new ArgumentNullException(nameof(execute));
             this.canExecute = canExecute;
         }
 
         public bool CanExecute(object parameter)
         {
-            return this.canExecute == null || this.canExecute(parameter);
+            try
+            {
+                return canExecute == null || canExecute(parameter);
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public void Execute(object parameter)
         {
-            this.execute(parameter);
+            execute(parameter);
+        }
+
+        // Метод для принудительного обновления команды
+        public void RaiseCanExecuteChanged()
+        {
+            CommandManager.InvalidateRequerySuggested();
         }
     }
 }

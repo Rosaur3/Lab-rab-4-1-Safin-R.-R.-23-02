@@ -5,30 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab_rab_4_1_Safin_R._R._23_02.View"
         mc:Ignorable="d"
-        Title="Сотрудники" Height="350" Width="550">
+        Title="Сотрудники" Height="350" Width="550"
+        Loaded="WindowEmployee_Loaded">
     <StackPanel>
         <ListView x:Name="lvEmployee" 
-                  ItemsSource="{Binding ListPersonDpo}" 
-                  SelectedItem="{Binding SelectedPersonDpo}"
-                  Margin="5">
+          ItemsSource="{Binding ListPersonDpo}" 
+          SelectedItem="{Binding SelectedPersonDpo, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+          Margin="5"
+          IsSynchronizedWithCurrentItem="True">
             <ListView.View>
                 <GridView>
                     <GridView.Columns>
                         <GridViewColumn Header="Код" Width="50" 
-                                        DisplayMemberBinding="{Binding Id}"/>
+                                DisplayMemberBinding="{Binding Id}"/>
                         <GridViewColumn Header="Фамилия" Width="100" 
-                                        DisplayMemberBinding="{Binding LastName}"/>
+                                DisplayMemberBinding="{Binding LastName}"/>
                         <GridViewColumn Header="Имя" Width="100" 
-                                        DisplayMemberBinding="{Binding FirstName}"/>
+                                DisplayMemberBinding="{Binding FirstName}"/>
                         <GridViewColumn Header="Должность" Width="120" 
-                                        DisplayMemberBinding="{Binding RoleName}"/>
+                                DisplayMemberBinding="{Binding RoleName}"/>
                         <GridViewColumn Header="Дата рождения" Width="120" 
-                                        DisplayMemberBinding="{Binding Birthday, StringFormat={}{0:dd.MM.yyyy}}"/>
+                                DisplayMemberBinding="{Binding Birthday}"/>
                     </GridView.Columns>
                 </GridView>
             </ListView.View>
         </ListView>
-        
+
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="5">
             <Button Content="Добавить" Height="25" Width="100" Margin="5"
                     Command="{Binding AddPerson}"/>
