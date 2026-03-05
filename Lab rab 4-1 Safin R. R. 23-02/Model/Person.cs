@@ -17,7 +17,7 @@ namespace Lab_rab_4_1_Safin_R._R._23_02.Model
             set
             {
                 firstName = value;
-                OnPropertyChanged("FirstName");
+                OnPropertyChanged(nameof(FirstName));
             }
         }
 
@@ -28,24 +28,24 @@ namespace Lab_rab_4_1_Safin_R._R._23_02.Model
             set
             {
                 lastName = value;
-                OnPropertyChanged("LastName");
+                OnPropertyChanged(nameof(LastName));
             }
         }
 
-        private DateTime birthday;
-        public DateTime Birthday
+        private string birthday; // Изменено на string для JSON
+        public string Birthday
         {
             get { return birthday; }
             set
             {
                 birthday = value;
-                OnPropertyChanged("Birthday");
+                OnPropertyChanged(nameof(Birthday));
             }
         }
 
         public Person() { }
 
-        public Person(int id, int roleId, string firstName, string lastName, DateTime birthday)
+        public Person(int id, int roleId, string firstName, string lastName, string birthday)
         {
             this.Id = id;
             this.RoleId = roleId;
@@ -59,26 +59,25 @@ namespace Lab_rab_4_1_Safin_R._R._23_02.Model
             return (Person)this.MemberwiseClone();
         }
 
-        public Person CopyFromPersonDPO(PersonDpo personDpo)
+        public Person CopyFromPersonDpo(PersonDpo personDpo)
         {
-            Person person = new Person();
-            RoleViewModel vmRole = new RoleViewModel();
+            this.Id = personDpo.Id;
+            this.FirstName = personDpo.FirstName;
+            this.LastName = personDpo.LastName;
+            this.Birthday = personDpo.Birthday;
 
-            foreach (var r in vmRole.ListRole)
+            // Находим RoleId по названию должности
+            var vmRole = new ViewModel.RoleViewModel();
+            foreach (var role in vmRole.ListRole)
             {
-                if (r.NameRole == personDpo.RoleName)
+                if (role.NameRole == personDpo.RoleName)
                 {
-                    person.RoleId = r.Id;
+                    this.RoleId = role.Id;
                     break;
                 }
             }
 
-            person.Id = personDpo.Id;
-            person.FirstName = personDpo.FirstName;
-            person.LastName = personDpo.LastName;
-            person.Birthday = personDpo.Birthday;
-
-            return person;
+            return this;
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

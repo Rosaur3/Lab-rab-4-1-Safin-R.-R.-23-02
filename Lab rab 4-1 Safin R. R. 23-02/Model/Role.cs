@@ -14,7 +14,7 @@ namespace Lab_rab_4_1_Safin_R._R._23_02.Model
             set
             {
                 nameRole = value;
-                OnPropertyChanged("NameRole");
+                OnPropertyChanged(nameof(NameRole));
             }
         }
 
