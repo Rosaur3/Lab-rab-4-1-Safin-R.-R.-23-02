@@ -69,7 +69,7 @@ namespace Lab_rab_4_1_Safin_R._R._23_02.View
                 return;
             }
 
-            // Обновляем дату рождения из календаря, если он видим
+            // Обновляем дату рождения из календаря
             if (ClBirthday.Visibility == Visibility.Visible && ClBirthday.SelectedDate.HasValue)
             {
                 tbBirthday.Text = ClBirthday.SelectedDate.Value.ToString("dd.MM.yyyy");
