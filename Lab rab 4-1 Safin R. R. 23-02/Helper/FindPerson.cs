@@ -7,16 +7,16 @@ using Lab_rab_4_1_Safin_R._R._23_02.Model;
 
 namespace Lab_rab_4_1_Safin_R._R._23_02.Helper
 {
-    public class FindRole
+    public class FindPerson
     {
         int id;
-        public FindRole(int id)
+        public FindPerson(int id)
         {
             this.id = id;
         }
-        public bool RolePredicate(Role role)
+        public bool PersonPredicate(Person person)
         {
-            return role.Id == id;
+            return person.Id == id;
         }
     }
 }

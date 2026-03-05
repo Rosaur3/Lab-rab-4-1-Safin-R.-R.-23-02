@@ -15,16 +15,12 @@ using System.Windows.Shapes;
 
 namespace Lab_rab_4_1_Safin_R._R._23_02.View
 {
-    /// <summary>
-    /// Логика взаимодействия для WindowRole.xaml
-    /// </summary>
     public partial class WindowRole : Window
     {
         public WindowRole()
         {
             InitializeComponent();
-            RoleViewModel vmRole = new RoleViewModel();
-            lvRole.ItemsSource = vmRole.ListRole;
+            DataContext = new RoleViewModel();
         }
     }
 }
