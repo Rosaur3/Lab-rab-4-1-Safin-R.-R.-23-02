@@ -1,11 +1,7 @@
 ﻿<Window x:Class="Lab_rab_4_1_Safin_R._R._23_02.View.WindowNewRole"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Lab_rab_4_1_Safin_R._R._23_02.View"
-        mc:Ignorable="d"
-        Title="Новая должность" Height="150" Width="300" WindowStartupLocation="CenterScreen">
+        Title="{Binding Title}" Height="150" Width="300" WindowStartupLocation="CenterScreen">
     <Grid Margin="10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -18,16 +14,16 @@
         </Grid.ColumnDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" Content="Код:" Margin="5"/>
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Id}" IsReadOnly="True" Margin="5"/>
+        <TextBox x:Name="IdTextBox" Grid.Row="0" Grid.Column="1" Text="{Binding Id}" IsReadOnly="True" Margin="5"/>
 
         <Label Grid.Row="1" Grid.Column="0" Content="Должность:" Margin="5"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding NameRole}" Margin="5"/>
+        <TextBox x:Name="NameRoleTextBox" Grid.Row="1" Grid.Column="1" Text="{Binding NameRole, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
 
         <StackPanel Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" 
                     Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
-            <Button x:Name="SaveButton" Content="Сохранить" Width="80" Height="25" Margin="5" 
+            <Button Content="Сохранить" Width="80" Height="25" Margin="5" 
                     Click="SaveButton_Click" IsDefault="True"/>
-            <Button x:Name="CancelButton" Content="Отмена" Width="80" Height="25" Margin="5" 
+            <Button Content="Отмена" Width="80" Height="25" Margin="5" 
                     Click="CancelButton_Click" IsCancel="True"/>
         </StackPanel>
     </Grid>

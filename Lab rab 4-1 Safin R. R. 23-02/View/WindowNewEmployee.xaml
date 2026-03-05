@@ -22,28 +22,28 @@
         </Grid.ColumnDefinitions>
 
         <Label Grid.Row="0" Grid.Column="0" Content="Код:" Margin="5"/>
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Id}" IsReadOnly="True" Margin="5"/>
+        <TextBox x:Name="txtId" Grid.Row="0" Grid.Column="1" Text="{Binding Id}" IsReadOnly="True" Margin="5"/>
 
         <Label Grid.Row="1" Grid.Column="0" Content="Фамилия:" Margin="5"/>
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding LastName}" Margin="5"/>
+        <TextBox x:Name="txtLastName" Grid.Row="1" Grid.Column="1" Text="{Binding LastName, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
 
         <Label Grid.Row="2" Grid.Column="0" Content="Имя:" Margin="5"/>
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding FirstName}" Margin="5"/>
+        <TextBox x:Name="txtFirstName" Grid.Row="2" Grid.Column="1" Text="{Binding FirstName, UpdateSourceTrigger=PropertyChanged}" Margin="5"/>
 
         <Label Grid.Row="3" Grid.Column="0" Content="Должность:" Margin="5"/>
         <ComboBox x:Name="CbRole" Grid.Row="3" Grid.Column="1" 
-                  ItemsSource="{Binding Source={StaticResource ResourceKey=roles}}"
-                  DisplayMemberPath="NameRole" SelectedValuePath="Id"
-                  SelectedValue="{Binding RoleId}" Margin="5"/>
+                  DisplayMemberPath="NameRole" 
+                  SelectedValuePath="Id" 
+                  Margin="5"/>
 
         <Label Grid.Row="4" Grid.Column="0" Content="Дата рождения:" Margin="5"/>
-        <DatePicker Grid.Row="4" Grid.Column="1" SelectedDate="{Binding Birthday}" Margin="5"/>
+        <DatePicker x:Name="dpBirthday" Grid.Row="4" Grid.Column="1" SelectedDate="{Binding Birthday}" Margin="5"/>
 
         <StackPanel Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" 
                     Orientation="Horizontal" HorizontalAlignment="Right" Margin="5">
-            <Button x:Name="SaveButton" Content="Сохранить" Width="80" Height="25" Margin="5" 
+            <Button Content="Сохранить" Width="80" Height="25" Margin="5" 
                     Click="SaveButton_Click" IsDefault="True"/>
-            <Button x:Name="CancelButton" Content="Отмена" Width="80" Height="25" Margin="5" 
+            <Button Content="Отмена" Width="80" Height="25" Margin="5" 
                     Click="CancelButton_Click" IsCancel="True"/>
         </StackPanel>
     </Grid>

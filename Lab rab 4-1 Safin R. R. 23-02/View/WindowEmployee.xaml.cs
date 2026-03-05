@@ -18,23 +18,12 @@ using Lab_rab_4_1_Safin_R._R._23_02.ViewModel;
 
 namespace Lab_rab_4_1_Safin_R._R._23_02.View
 {
-    public partial class WindowNewRole : Window
+    public partial class WindowEmployee : Window
     {
-        public WindowNewRole()
+        public WindowEmployee()
         {
             InitializeComponent();
-        }
-
-        private void SaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.DialogResult = true;
-            this.Close();
-        }
-
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            this.DialogResult = false;
-            this.Close();
+            DataContext = PersonViewModel.Instance;
         }
     }
 }

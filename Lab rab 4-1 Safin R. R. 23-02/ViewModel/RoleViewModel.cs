@@ -10,48 +10,79 @@ namespace Lab_rab_4_1_Safin_R._R._23_02.ViewModel
 {
     public class RoleViewModel : INotifyPropertyChanged
     {
+        // Реализация синглтона
+        private static RoleViewModel _instance;
+        public static RoleViewModel Instance => _instance ??= new RoleViewModel();
+
         private Role selectedRole;
+
         public Role SelectedRole
         {
             get { return selectedRole; }
             set
             {
                 selectedRole = value;
-                OnPropertyChanged("SelectedRole");
+                OnPropertyChanged(nameof(SelectedRole));
             }
         }
 
-        public ObservableCollection<Role> ListRole { get; set; } = new ObservableCollection<Role>();
+        public ObservableCollection<Role> ListRole { get; set; }
 
-        public RoleViewModel()
+        // Приватный конструктор для синглтона
+        private RoleViewModel()
         {
-            this.ListRole.Add(new Role
+            ListRole = new ObservableCollection<Role>();
+            LoadTestData();
+        }
+
+        // Публичный конструктор для совместимости
+        public RoleViewModel(bool createNew = false)
+        {
+            if (!createNew)
             {
-                Id = 1,
-                NameRole = "Директор"
-            });
-            this.ListRole.Add(new Role
+                // Если вызывается не для создания нового, возвращаем синглтон
+                var instance = Instance;
+                ListRole = instance.ListRole;
+            }
+            else
             {
-                Id = 2,
-                NameRole = "Бухгалтер"
-            });
-            this.ListRole.Add(new Role
+                ListRole = new ObservableCollection<Role>();
+                LoadTestData();
+            }
+        }
+
+        private void LoadTestData()
+        {
+            // Добавляем тестовые данные только если список пуст
+            if (ListRole.Count == 0)
             {
-                Id = 3,
-                NameRole = "Менеджер"
-            });
+                ListRole.Add(new Role
+                {
+                    Id = 1,
+                    NameRole = "Директор"
+                });
+                ListRole.Add(new Role
+                {
+                    Id = 2,
+                    NameRole = "Бухгалтер"
+                });
+                ListRole.Add(new Role
+                {
+                    Id = 3,
+                    NameRole = "Менеджер"
+                });
+            }
         }
 
         public int MaxId()
         {
             int max = 0;
-            foreach (var r in this.ListRole)
+            foreach (var r in ListRole)
             {
                 if (max < r.Id)
                 {
                     max = r.Id;
                 }
-                ;
             }
             return max;
         }
@@ -62,24 +93,24 @@ namespace Lab_rab_4_1_Safin_R._R._23_02.ViewModel
         {
             get
             {
-                return addRole ??
-                    (addRole = new RelayCommand(obj =>
+                return addRole ??= new RelayCommand(obj =>
+                {
+                    var wnRole = new WindowNewRole
                     {
-                        WindowNewRole wnRole = new WindowNewRole
-                        {
-                            Title = "Новая должность"
-                        };
+                        Title = "Новая должность",
+                        Owner = Application.Current.MainWindow
+                    };
 
-                        int maxIdRole = MaxId() + 1;
-                        Role role = new Role { Id = maxIdRole };
-                        wnRole.DataContext = role;
+                    int maxIdRole = MaxId() + 1;
+                    var role = new Role { Id = maxIdRole };
+                    wnRole.DataContext = role;
 
-                        if (wnRole.ShowDialog() == true)
-                        {
-                            ListRole.Add(role);
-                        }
+                    if (wnRole.ShowDialog() == true)
+                    {
+                        ListRole.Add(role);
                         SelectedRole = role;
-                    }));
+                    }
+                });
             }
         }
         #endregion
@@ -90,22 +121,25 @@ namespace Lab_rab_4_1_Safin_R._R._23_02.ViewModel
         {
             get
             {
-                return editRole ??
-                    (editRole = new RelayCommand(obj =>
-                    {
-                        WindowNewRole wnRole = new WindowNewRole
-                        {
-                            Title = "Редактирование должности"
-                        };
-                        Role role = SelectedRole;
-                        Role tempRole = role.ShallowCopy();
-                        wnRole.DataContext = tempRole;
+                return editRole ??= new RelayCommand(obj =>
+                {
+                    if (SelectedRole == null) return;
 
-                        if (wnRole.ShowDialog() == true)
-                        {
-                            role.NameRole = tempRole.NameRole;
-                        }
-                    }, (obj) => SelectedRole != null && ListRole.Count > 0));
+                    var wnRole = new WindowNewRole
+                    {
+                        Title = "Редактирование должности",
+                        Owner = Application.Current.MainWindow
+                    };
+
+                    var tempRole = SelectedRole.ShallowCopy();
+                    wnRole.DataContext = tempRole;
+
+                    if (wnRole.ShowDialog() == true)
+                    {
+                        SelectedRole.NameRole = tempRole.NameRole;
+                        OnPropertyChanged(nameof(ListRole));
+                    }
+                }, obj => SelectedRole != null && ListRole.Count > 0);
             }
         }
         #endregion
@@ -116,18 +150,21 @@ namespace Lab_rab_4_1_Safin_R._R._23_02.ViewModel
         {
             get
             {
-                return deleteRole ??
-                    (deleteRole = new RelayCommand(obj =>
-                    {
-                        Role role = SelectedRole;
-                        MessageBoxResult result = MessageBox.Show("Удалить данные по должности: " +
-                            role.NameRole, "Предупреждение", MessageBoxButton.OKCancel, MessageBoxImage.Warning);
+                return deleteRole ??= new RelayCommand(obj =>
+                {
+                    if (SelectedRole == null) return;
 
-                        if (result == MessageBoxResult.OK)
-                        {
-                            ListRole.Remove(role);
-                        }
-                    }, (obj) => SelectedRole != null && ListRole.Count > 0));
+                    var result = MessageBox.Show(
+                        $"Удалить данные по должности: {SelectedRole.NameRole}",
+                        "Предупреждение",
+                        MessageBoxButton.OKCancel,
+                        MessageBoxImage.Warning);
+
+                    if (result == MessageBoxResult.OK)
+                    {
+                        ListRole.Remove(SelectedRole);
+                    }
+                }, obj => SelectedRole != null && ListRole.Count > 0);
             }
         }
         #endregion

@@ -20,7 +20,7 @@ namespace Lab_rab_4_1_Safin_R._R._23_02.View
         public WindowRole()
         {
             InitializeComponent();
-            DataContext = new RoleViewModel();
+            DataContext = RoleViewModel.Instance;
         }
     }
 }

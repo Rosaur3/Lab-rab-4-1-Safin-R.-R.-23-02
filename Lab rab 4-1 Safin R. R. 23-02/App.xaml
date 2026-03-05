@@ -4,6 +4,5 @@
              xmlns:viewModel="clr-namespace:Lab_rab_4_1_Safin_R._R._23_02.ViewModel"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
     </Application.Resources>
 </Application>

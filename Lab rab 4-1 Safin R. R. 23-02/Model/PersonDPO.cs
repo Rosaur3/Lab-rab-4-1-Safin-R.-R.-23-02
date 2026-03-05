@@ -69,29 +69,23 @@ namespace Lab_rab_4_1_Safin_R._R._23_02.Model
             return (PersonDpo)this.MemberwiseClone();
         }
 
-        public PersonDpo CopyFromPerson(Person person)
+        public PersonDpo CopyFromPerson(Person person, RoleViewModel vmRole)
         {
-            PersonDpo perDpo = new PersonDpo();
-            RoleViewModel vmRole = new RoleViewModel();
-            string role = string.Empty;
+            var perDpo = new PersonDpo();
 
             foreach (var r in vmRole.ListRole)
             {
                 if (r.Id == person.RoleId)
                 {
-                    role = r.NameRole;
+                    perDpo.Id = person.Id;
+                    perDpo.RoleName = r.NameRole;
+                    perDpo.FirstName = person.FirstName;
+                    perDpo.LastName = person.LastName;
+                    perDpo.Birthday = person.Birthday;
                     break;
                 }
             }
 
-            if (role != string.Empty)
-            {
-                perDpo.Id = person.Id;
-                perDpo.RoleName = role;
-                perDpo.FirstName = person.FirstName;
-                perDpo.LastName = person.LastName;
-                perDpo.Birthday = person.Birthday;
-            }
             return perDpo;
         }
 
